@@ -19,3 +19,6 @@ zotero_derive = { workspace = true }
 chrono = { workspace = true }
 regex = { workspace = true }
 once_cell = { workspace = true }
+
+[dev-dependencies]
+assert-json-diff = "2.0.2"

@@ -84,6 +84,8 @@ pub use item_data::PatentData;
 pub use item_data::PatentDataBuilder;
 pub use item_data::PodcastData;
 pub use item_data::PodcastDataBuilder;
+pub use item_data::PreprintData;
+pub use item_data::PreprintDataBuilder;
 pub use item_data::PresentationData;
 pub use item_data::PresentationDataBuilder;
 pub use item_data::RadioBroadcastData;
@@ -168,6 +170,8 @@ pub enum ItemType {
     Patent(PatentData),
     /// A podcast (an episode of an audio or video program distributed online, often via subscription).
     Podcast(PodcastData),
+    /// A preprint article published in online.
+    Preprint(PreprintData),
     /// A presentation made as part of a conference, meeting, symposium, lecture, etc. This item type refers to the presentation itself, not a written version published as part of a conference proceedings (use Conference Paper for such published versions).
     Presentation(PresentationData),
     /// An audio broadcast, such as a radio news show, an episode of a radio entertainment series, or similar. Includes broadcasts from online radio stations and audio broadcasts archived online (cf. Podcast).
@@ -341,6 +345,12 @@ impl Item {
                 .map(|c| c.full_name())
                 .collect::<Vec<String>>()
                 .join(", "),
+            ItemType::Preprint(d) => d
+                .creators
+                .iter()
+                .map(|c| c.full_name())
+                .collect::<Vec<String>>()
+                .join(", "),
             ItemType::Presentation(d) => d
                 .creators
                 .iter()
@@ -456,6 +466,7 @@ impl Item {
             ItemType::RadioBroadcast(d) => &d.date,
             ItemType::InstantMessage(d) => &d.date,
             ItemType::DictionaryEntry(d) => &d.date,
+            ItemType::Preprint(_) => todo!(),
             ItemType::Presentation(d) => &d.date,
             ItemType::Manuscript(d) => &d.date,
             ItemType::BlogPost(d) => &d.date,

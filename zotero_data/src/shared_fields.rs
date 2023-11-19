@@ -1,5 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+fn disable_serialize_if_none<T>(option: &Option<T>) -> bool {
+    option.is_none()
+}
+
 #[derive(Deserialize, Serialize, Debug, Clone, PartialEq)]
 pub struct Library {
     r#type: String,
@@ -14,6 +18,7 @@ pub struct Links {
     pub self_link: Option<Link>,
     pub alternate: Link,
     // Only for collections
+    #[serde(skip_serializing_if = "disable_serialize_if_none")]
     pub up: Option<Link>,
 }
 
